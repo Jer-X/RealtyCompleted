@@ -211,8 +211,9 @@ Vue.component('x-card',{
 				                    _this.msgPrice = '';
 				                    _this.msgConstruct = '';
 				                    document.querySelector('#up_img').value = '';
+				                    _this.$dispatch('callData',{ message: '修改'});
 				                    _this.$http.post('./php/judge.php',{ uid: _this.userid },{ emulateJSON: true }).then(function(msg){
-				                    	if(msg.body){
+				                    	if(msg.body == 201 || msg.body == 202 || msg.body == 201202){
 				                    		_this.$root.refresh();
 				                    	}
 				                    });

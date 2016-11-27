@@ -49,6 +49,9 @@ new Vue({
             this.$refs.iList.items = [];
             this.$refs.iList.$set('index',1);
             this.$refs.iList.$set('maxIndex','');
+        },
+        callData: function(msg){
+            this.$refs.iList.Getdata();
         }
     },
     methods: {
