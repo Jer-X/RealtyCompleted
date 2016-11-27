@@ -1,4 +1,5 @@
-<?php  
+<?php 
+	ini_set('max_execution_time', 60); 
 	$file = './php/First.txt';
 	$content = file_get_contents($file);
 	if($content == 0){
@@ -32,7 +33,7 @@
 			<div class="mdl-layout__header-row">
 				<!-- Title -->
 				<span v-if="!isAdmin" class="mdl-layout-title">随缘吧</span>
-				<span v-else class="mdl-layout-title">{{user.name}}</span>
+				<span v-else class="mdl-layout-title">随缘吧{{user.name}}</span>
 				<div class="mdl-layout-spacer"></div>
 				<!-- Search -->
 				<div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable

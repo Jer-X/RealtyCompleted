@@ -35,60 +35,43 @@
 	    $day = $time / (24*60*60*1000);
 	    if($day < 30){
 	    	$sql = "UPDATE `user_info` SET `user_type` = '1' WHERE `user_info`.`uid` = '".$uid."'";
-	    	mysql_query($sql);
+	    	$result = mysql_query($sql);
+	    	$num = mysql_affected_rows();
+	    	if($num){
+	    		echo 201;
+	    	}
 	    }
     }
     
 
-    //如果一个月内有10条以上的信息有不同房源地址但却有相同的联系方式，这些信息的发布者是中介人员，记入数据库。
-    $sql = "SELECT * FROM estate_info WHERE `uid` IN ( SELECT uid FROM user_info WHERE phone IN (SELECT phone FROM user_info WHERE uid = '".$uid."')) ORDER BY create_time DESC";
+    //如果一个月内有10条以上的信息有不同房源地址但却有相同的联系方式，这些信息的发布者是中介人员，记入数据库。(默认可使用同一手机号码)
+    $sql = "SELECT * FROM estate_info WHERE `uid` IN ( SELECT uid FROM user_info WHERE phone IN (SELECT phone FROM user_info WHERE uid = '".$uid."')) AND DATE_SUB(CURDATE(),INTERVAL 30 DAY) ORDER BY create_time DESC";
     $result = mysql_query($sql);
     $num = mysql_num_rows($result);
 
     if($num > 10){
-    	$sql = "SELECT * FROM estate_info WHERE `uid` IN ( SELECT uid FROM user_info WHERE phone IN (SELECT phone FROM user_info WHERE uid = '".$uid."')) ORDER BY create_time DESC LIMIT 10";
+    	$sql = "SELECT address FROM estate_info WHERE uid = '".$uid."' ORDER BY create_time DESC LIMIT 1";
     	$result = mysql_query($sql);
-    	$j = 0;
-
+    	$address = mysql_fetch_assoc($result)['address'];
+    	
+    	$sql = "SELECT address,uid FROM estate_info WHERE `uid` IN ( SELECT uid FROM user_info WHERE phone IN (SELECT phone FROM user_info WHERE uid = '".$uid."')) AND DATE_SUB(CURDATE(),INTERVAL 30 DAY) ORDER BY create_time DESC";
+    	$result = mysql_query($sql);
+    	$count = 0;
     	while($row = mysql_fetch_assoc($result)){
-	    	if($j == 0){
-	    		$one = $row;
-	    	}
-	    	if($j == 1){
-	    		$two = $row;
-	    	}
-	    	if($j == 2){
-	    		$three = $row;
-	    	}
-	    	if($j == 3){
-	    		$four = $row;
-	    	}
-	    	if($j == 4){
-	    		$five = $row;
-	    	}
-	    	if($j == 5){
-	    		$six = $row;
-	    	}
-	    	if($j == 6){
-	    		$seven = $row;
-	    	}
-	    	if($j == 7){
-	    		$eight = $row;
-	    	}
-	    	if($j == 8){
-	    		$nine = $row;
-	    	}
-	    	if($j == 9){
-	    		$ten = $row;
-	    	}
-	    	$j++;
-	    }
+    		if($row['address'] != $address && $row['uid'] != $uid){
+    			$count++;
+    		}
+    	}
 
-	    $time = strtotime($one['create_time']) - strtotime($ten['create_time']);
-	    $day = $time / (24*60*60*1000);
-	    if($day < 30){
-	    	$sql = "UPDATE `user_info` SET `user_type` = '1' WHERE `user_info`.`uid` IN ('".$one['uid']."','".$two['uid']."','".$three['uid']."','".$four['uid']."','".$five['uid']."','".$six['uid']."','".$seven['uid']."','".$eight['uid']."','".$nine['uid']."','".$ten['uid']."')";
-	    	mysql_query($sql);
-	    }
+    	if($count > 10){
+    		$sql = "SELECT uid FROM estate_info WHERE `uid` IN ( SELECT uid FROM user_info WHERE phone IN (SELECT phone FROM user_info WHERE uid = '".$uid."')) ORDER BY create_time DESC";
+	    	$result = mysql_query($sql);
+
+	    	while($row = mysql_fetch_assoc($result)){
+		    	$sql = "UPDATE `user_info` SET `user_type` = '1' WHERE `user_info`.`uid` ='".$row['uid']."'";
+		    	mysql_query($sql);
+		    }
+		    echo 202;
+    	}
     }
 ?>

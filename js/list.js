@@ -23,6 +23,7 @@ Vue.component('x-list',{
 						<th class="mdl-data-table__cell--non-numeric">地址</th>
 						<th class="mdl-data-table__cell--non-numeric">售价</th>
 						<th class="mdl-data-table__cell--non-numeric">类型</th>
+						<th class="mdl-data-table__cell--non-numeric">房主</th>
 						<th class="mdl-data-table__cell--non-numeric">时间</th>
 						<th class="mdl-data-table__cell--non-numeric">来源</th>
 						<th class="mdl-data-table__cell--non-numeric">投诉</th>
@@ -38,6 +39,7 @@ Vue.component('x-list',{
 						<td class="mdl-data-table__cell--non-numeric">{{ item.address }}</td>
 						<td class="mdl-data-table__cell--non-numeric">{{ item.price }}</td>
 						<td class="mdl-data-table__cell--non-numeric">{{ type[item.info_type - 1] }}</td>
+						<td class="mdl-data-table__cell--non-numeric">{{ item.username }}</td>
 						<td class="mdl-data-table__cell--non-numeric">{{ item.create_time }}</td>
 						<td class="mdl-data-table__cell--non-numeric">{{ source[item.user_type] }}</td>
 						<td class="mdl-data-table__cell--non-numeric">
@@ -118,8 +120,10 @@ Vue.component('x-list',{
 				if(msg.body.code === 200 ){
 					alert('投诉成功');
 					this.$http.post('./php/judge_com.php',{ e_id: eid },{ emulateJSON: true });
-				}else{
+				}else if(msg.body.code === 400 ){
 					alert('你已经投诉过了');
+				}else{
+					alert('不能投诉自己');
 				}
 			},function(err){});
 		}

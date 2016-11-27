@@ -19,7 +19,7 @@
 	$respondent = $row['uid'];
 
 	if($complainant == $respondent){
-		$json_res = array("code"=>400);
+		$json_res = array("code"=>402);
 		echo json_encode($json_res, JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
 		die();
 	}

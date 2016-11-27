@@ -14,7 +14,7 @@
     $start = 15*($index-1);
     $end = 15*($index);
     
-    $sql="SELECT eid,image,title,area,address,price,room_type,info_type,construct,reliable,create_time,user_type FROM estate_info,user_info WHERE estate_info.uid = user_info.uid ORDER BY create_time DESC LIMIT ".$start.",".$end;
+    $sql="SELECT eid,image,title,area,address,price,room_type,info_type,construct,reliable,create_time,user_type,username FROM estate_info,user_info WHERE estate_info.uid = user_info.uid ORDER BY create_time DESC LIMIT ".$start.",".$end;
     $result=mysql_query($sql,$conn);
 
     $json_arr=array();
@@ -31,7 +31,8 @@
             "construct"=>$row["construct"],
             "reliable"=>$row["reliable"],
             "create_time"=>$row["create_time"],
-            "user_type"=>$row["user_type"]
+            "user_type"=>$row["user_type"],
+            "username"=>$row['username']
         );
         array_push($json_arr,$arr);
     }

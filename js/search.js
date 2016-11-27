@@ -36,6 +36,8 @@ Vue.component('x-search',{
 						<th class="mdl-data-table__cell--non-numeric">地址</th>
 						<th class="mdl-data-table__cell--non-numeric">售价</th>
 						<th class="mdl-data-table__cell--non-numeric">类型</th>
+						<th class="mdl-data-table__cell--non-numeric">房主</th>
+						<th class="mdl-data-table__cell--non-numeric">时间</th>
 						<th class="mdl-data-table__cell--non-numeric">来源</th>
 						<th class="mdl-data-table__cell--non-numeric">投诉</th>
 					</tr>
@@ -50,6 +52,8 @@ Vue.component('x-search',{
 						<td class="mdl-data-table__cell--non-numeric">{{ item.address }}</td>
 						<td class="mdl-data-table__cell--non-numeric">{{ item.price }}</td>
 						<td class="mdl-data-table__cell--non-numeric">{{ type[item.info_type - 1] }}</td>
+						<td class="mdl-data-table__cell--non-numeric">{{ item.username }}</td>
+						<td class="mdl-data-table__cell--non-numeric">{{ item.create_time }}</td>
 						<td class="mdl-data-table__cell--non-numeric">{{ source[item.user_type] }}</td>
 						<td class="mdl-data-table__cell--non-numeric">
 							<button class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored" @click="Complaint(item.eid,userid)">

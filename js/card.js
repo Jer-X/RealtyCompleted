@@ -50,11 +50,11 @@ Vue.component('x-card',{
         	template: `
 				<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect mdl-cell--6-col mdl-cell--3-offset">
 					<div class="mdl-tabs__tab-bar">
-						<a href="#panel" class="mdl-tabs__tab is-active" v-on:click="Click(1)">Sales Info</a>
-						<a href="#panel" class="mdl-tabs__tab" v-on:click="Click(2)">Rental Info</a>
-						<a href="#panel" class="mdl-tabs__tab" v-on:click="Click(3)">Buying Info</a>
-						<a href="#panel" class="mdl-tabs__tab" v-on:click="Click(4)">HouseRental Info</a>
-						<a href="#panel" class="mdl-tabs__tab" v-on:click="Click(5)">Co-tenant Info</a>
+						<a href="#panel" class="mdl-tabs__tab is-active" v-on:click="Click(1)">出售</a>
+						<a href="#panel" class="mdl-tabs__tab" v-on:click="Click(2)">出租</a>
+						<a href="#panel" class="mdl-tabs__tab" v-on:click="Click(3)">求购</a>
+						<a href="#panel" class="mdl-tabs__tab" v-on:click="Click(4)">求租</a>
+						<a href="#panel" class="mdl-tabs__tab" v-on:click="Click(5)">合租</a>
 					</div>
 					<!-- panel -->
 					<div class="mdl-tabs__panel mdl-grid is-active" id="panel">
@@ -181,6 +181,11 @@ Vue.component('x-card',{
 		                return false;
 		            }
 		            
+		            if(_this.$root.user.user_frozen == 1){
+		            	_this.$dispatch('callTips', { message: '账号已冻结!' });
+		                return false;
+		            }
+
 		            _this.$http.post('./php/insertMsg.php', {
 		            	uid: _this.userid,
 		            	type: '1',
@@ -206,7 +211,11 @@ Vue.component('x-card',{
 				                    _this.msgPrice = '';
 				                    _this.msgConstruct = '';
 				                    document.querySelector('#up_img').value = '';
-				                    _this.$http.post('./php/judge.php',{ uid: _this.userid },{ emulateJSON: true });
+				                    _this.$http.post('./php/judge.php',{ uid: _this.userid },{ emulateJSON: true }).then(function(msg){
+				                    	if(msg.body){
+				                    		_this.$root.refresh();
+				                    	}
+				                    });
 						    	}else{
 						    		_this.$dispatch('callTips', { message: '图片上传不成功！' });
 						    	}
@@ -215,8 +224,8 @@ Vue.component('x-card',{
 		                    _this.$dispatch('callTips', { message: '数据库已挂！' });
 		                }
 		            }, function (err) {});
-						}
-					},
+				}
+			},
 
         }
 	}

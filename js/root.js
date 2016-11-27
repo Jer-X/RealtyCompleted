@@ -55,6 +55,23 @@ new Vue({
         icon_search: function(){
             this.$refs.iSearch.Search(this.iS_text);
             this.iS_text = '';
+        },
+        refresh: function(){
+            var vm = this;
+            this.$http.get('./php/isLogin.php').then(function(resp){
+                if(resp.body.admin === true){
+                    vm.isAdmin = true;
+                    vm.user.name = resp.body.username;
+                    vm.user.id = resp.body.userid;
+                    vm.user.telephone = resp.body.phone;
+                    vm.user.user_type = resp.body.user_type;
+                    vm.user.user_frozen = resp.body.frozen;
+                }else{
+                    vm.isAdmin = false;
+                }
+            },function(err){
+
+            });
         }
     }
 })

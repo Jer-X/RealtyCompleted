@@ -11,7 +11,7 @@
     mysql_query($sql,$conn);
 
     $eid = $_POST['e_id'];
-
+    //判断是否为假信息
     $sql = "SELECT * FROM complain WHERE eid = '".$eid."'";
     $num = mysql_query($sql);
     $num = mysql_affected_rows();
