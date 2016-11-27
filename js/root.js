@@ -4,7 +4,10 @@ new Vue({
         isAdmin: false,
         user: {
             name: '',
-            id: ''
+            id: '',
+            telephone: '',
+            user_type: '',
+            user_frozen: ''
         },
         iS_text: ''
     },
@@ -15,6 +18,9 @@ new Vue({
                 vm.isAdmin = true;
                 vm.user.name = resp.body.username;
                 vm.user.id = resp.body.userid;
+                vm.user.telephone = resp.body.phone;
+                vm.user.user_type = resp.body.user_type;
+                vm.user.user_frozen = resp.body.frozen;
             }else{
                 vm.isAdmin = false;
             }
@@ -23,6 +29,11 @@ new Vue({
         });
     },
     events:{
+        call: function(msg){
+            this.user.telephone = msg.phone;
+            this.user.user_type = msg.user_type;
+            this.user.user_frozen = msg.frozen;
+        },
         callAdmin: function(msg){
             this.isAdmin = msg.ad;
         },
@@ -36,6 +47,8 @@ new Vue({
             this.$refs.iSearch.listData = [];
             this.$refs.iSearch.searchVal = '';
             this.$refs.iList.items = [];
+            this.$refs.iList.$set('index',1);
+            this.$refs.iList.$set('maxIndex','');
         }
     },
     methods: {

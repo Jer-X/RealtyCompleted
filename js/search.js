@@ -6,6 +6,14 @@ Vue.component('x-search',{
 					<div class="mdl-list__item">
 						<span class="mdl-list__item-primary-content">
 							<i class="material-icons  mdl-list__item-icon">search</i>
+							<select v-model="selected" class="select">
+								<option value="1" selected>标题</option>
+								<option value="2">面积</option>
+								<option value="3">装修</option>
+								<option value="4">居室</option>
+								<option value="5">地址</option>
+								<option value="6">售价</option>
+							</select>
 							<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label text-length">
 								<input class="mdl-textfield__input" id="Search" v-model="searchVal" @keydown.enter="Search()"> 
 								<label class="mdl-textfield__label" for="Search">搜索内容</label>
@@ -58,15 +66,23 @@ Vue.component('x-search',{
 			searchVal: '',
 			listData: [],
 			type: ['出售','出租','求购','求租','合租'],
-			source: ['个人','中介']
+			source: ['个人','中介'],
+			selected: ''
 		};
 	},
 	methods: {
 		Search: function(){
 			//console.log(obj.searchVal);
 			var _this = this;
-			
-			this.$http.post('./php/search.php', {'key':_this.searchVal},{ emulateJSON:true } ).then(function(msg){
+			if(_this.searchVal == ''){
+				alert('请输入关键词');
+				return;
+			}
+			if (!_this.$parent.isAdmin) {
+				alert('登录才能搜索！');
+				return false;
+			}
+			this.$http.post('./php/search.php', { 'key':_this.searchVal,'type':_this.selected },{ emulateJSON:true } ).then(function(msg){
 			// console.log(msg.body, typeof msg.body);
 				if(msg.body.length != 0){
 					_this.listData = JSON.parse(msg.body);

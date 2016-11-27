@@ -12,8 +12,9 @@
 
     $eid = $_POST['e_id'];
 
-    $sql = "SELECT COUNT(*) FROM complain WHERE eid = '".$eid."'";
+    $sql = "SELECT * FROM complain WHERE eid = '".$eid."'";
     $num = mysql_query($sql);
+    $num = mysql_affected_rows();
 
     if($num > 3){
     	$sql = "SELECT uid FROM estate_info WHERE eid = '".$eid."'";

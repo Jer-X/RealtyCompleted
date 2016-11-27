@@ -31,7 +31,7 @@
 		<header class="mdl-layout__header">
 			<div class="mdl-layout__header-row">
 				<!-- Title -->
-				<span v-if="!isAdmin" class="mdl-layout-title">Title</span>
+				<span v-if="!isAdmin" class="mdl-layout-title">随缘吧</span>
 				<span v-else class="mdl-layout-title">{{user.name}}</span>
 				<div class="mdl-layout-spacer"></div>
 				<!-- Search -->
@@ -57,19 +57,16 @@
 			</div>
 			<!-- Tabs -->
 			<div class="mdl-layout__tab-bar mdl-js-ripple-effect">
-				<a href="#fixed-tab-1" class="mdl-layout__tab is-active">Tab 1</a>
-				<a href="#fixed-tab-2" class="mdl-layout__tab">Tab 2</a>
-				<a href="#fixed-tab-3" class="mdl-layout__tab">Tab 3</a>
-				<a href="#fixed-tab-4" class="mdl-layout__tab">Tab 4</a>
+				<a href="#fixed-tab-1" class="mdl-layout__tab is-active">搜索界面</a>
+				<a href="#fixed-tab-2" class="mdl-layout__tab">展示界面</a>
+				<a href="#fixed-tab-3" class="mdl-layout__tab">信息界面</a>
+				<a href="#fixed-tab-4" class="mdl-layout__tab">个人中心</a>
 			</div>
 		</header>
 		<div class="mdl-layout__drawer">
-			<span class="mdl-layout-title">Title</span>
+			<span class="mdl-layout-title">随缘吧</span>
 			<nav class="mdl-navigation">
-				<a class="mdl-navigation__link" href="#fixed-tab-1">Link</a>
-				<a class="mdl-navigation__link" href="#fixed-tab-2">Link</a>
-				<a class="mdl-navigation__link" href="#fixed-tab-3">Link</a>
-				<a class="mdl-navigation__link" href="#fixed-tab-4">Link</a>
+				<a class="mdl-navigation__link">这里并没有什么用</a>
 			</nav>
 		</div>
 		<main class="mdl-layout__content">

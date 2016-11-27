@@ -25,11 +25,11 @@
         $sql_insert = "INSERT INTO user_info (username, password, phone) VALUES('".$username."', '".$user_password."', '".$userphone."')";
         $result_insert = mysql_query($sql_insert);
         if($result_insert){
-            $sql = "SELECT uid,username,password FROM user_info WHERE username = '".$username."' AND password = '".$user_password."'";
+            $sql = "SELECT * FROM user_info WHERE username = '".$username."' AND password = '".$user_password."'";
             $result = mysql_query($sql);
             $row=mysql_fetch_assoc($result);
             $id = $row['uid'];
-            $json_res = array("code"=>200,"username"=>$username,"uid"=>$id);
+            $json_res = array("code"=>200,"username"=>$username,"uid"=>$row['uid'],"phone"=>$row['phone'],'frozen'=>$row['frozen'],'user_type'=>$row['user_type']);
             session_start();
             $_SESSION["admin"] = true;
             $_SESSION["username"] = $username;

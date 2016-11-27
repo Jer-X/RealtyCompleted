@@ -32,3 +32,24 @@
 .margin_5{
 	margin-top:5px;
 }
+.select{
+	outline:none;
+	border:none;
+	margin-right: 5px;
+}
+.select:active{
+	outline:none;
+	border:none;
+}
+.topBack{
+	color:white;
+	display:block;
+	background:#CCC;
+	border-radius:10px;
+	position:fixed;
+	bottom:4%;
+	right:2%;
+}
+.Font{
+	font-size:48px;
+}

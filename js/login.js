@@ -125,6 +125,7 @@ Vue.component('x-login',{
                                 _this.$dispatch('callTips', {message: '注册成功！'});
                                 _this.$dispatch('callAdmin', { ad : true });
                                 _this.$dispatch('callId', { id : result.body.uid });
+                                _this.$dispatch('call',{ phone: result.body.phone, frozen: result.body.frozen ,user_type: result.body.user_type });
                                 //console.log(result.body.username);
                                 _this.$dispatch('callUser', { user : result.body.username });
                                 _this.username = '';
@@ -145,6 +146,7 @@ Vue.component('x-login',{
                                 _this.$dispatch('callAdmin', { ad : true });
                                 _this.$dispatch('callId', { id : result.body.uid });
                                 _this.$dispatch('callUser', { user : result.body.username });
+                                _this.$dispatch('call',{ phone: result.body.phone, frozen: result.body.frozen ,user_type: result.body.user_type });
                                 _this.username = '';
                                 _this.password = '';
                             }else if(result.body.code === 100){
@@ -171,7 +173,25 @@ Vue.component('x-login',{
                         <li class="mdl-list__item">
                             <span class="mdl-list__item-primary-content">
                                 <i class="material-icons mdl-list__item-icon">account_circle</i>
-                                账号 - {{username}}
+                                账号名称 - {{username}}
+                            </span>
+                        </li>
+                        <li class="mdl-list__item">
+                            <span class="mdl-list__item-primary-content">
+                                <i class="material-icons mdl-list__item-icon">account_circle</i>
+                                用户类型 - {{usertype}}
+                            </span>
+                        </li>
+                        <li class="mdl-list__item">
+                            <span class="mdl-list__item-primary-content">
+                                <i class="material-icons mdl-list__item-icon">account_circle</i>
+                                联系方式 - {{userphone}}
+                            </span>
+                        </li>
+                        <li class="mdl-list__item">
+                            <span class="mdl-list__item-primary-content">
+                                <i class="material-icons mdl-list__item-icon">account_circle</i>
+                                是否冻结 - {{userfrozen}}
                             </span>
                         </li>
                     </ul>
@@ -188,10 +208,31 @@ Vue.component('x-login',{
                   </div>
                 </div>
             `,
+            data: function(){
+                return {
+                    typ: ['个人用户','中介用户'],
+                    fro: ['非冻结','已冻结']
+                };
+            },
             computed: {
                 username: {
                     get: function(){
                         return this.$parent.$parent.user.name;
+                    }
+                },
+                usertype: {
+                    get: function(){
+                        return this.typ[this.$parent.$parent.user.user_type];
+                    }
+                },
+                userphone: {
+                    get: function(){
+                        return this.$parent.$parent.user.telephone;
+                    }
+                },
+                userfrozen: {
+                    get: function(){
+                        return this.fro[this.$parent.$parent.user.user_frozen];
                     }
                 }
             },

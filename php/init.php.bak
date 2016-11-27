@@ -1,7 +1,7 @@
 <?php
 require 'database.php';
 
-ini_set('max_execution_time', '60');
+ini_set('max_execution_time', '60')；
 $file = './php/msg2.txt';
 $content = file_get_contents($file);
 $content = explode('#',$content);
@@ -71,9 +71,9 @@ CREATE TABLE IF NOT EXISTS estate_info(
   area INT NOT NULL,
   address VARCHAR(100) NOT NULL,
   price VARCHAR(8) NOT NULL,
-  room_type VARCHAR(10) NOT NULL DEFAULT '精装修',
+  room_type VARCHAR(10) NOT NULL,
   info_type INT NOT NULL COMMENT '信息的类型' DEFAULT 1,
-  construct VARCHAR(20) NOT NULL,
+  construct VARCHAR(20) NOT NULL DEFAULT '精装修',
   reliable INT NOT NULL DEFAULT 1,
   create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   UNIQUE KEY (`eid`) 

@@ -12,8 +12,29 @@
 
 	//$keyWord = $_POST['keyWord'];
 	$key = $_POST['key'];
+    $type = $_POST['type'];
+    switch($type){
+        case 1:
+            $search_type = 'title';
+            break;
+        case 2:
+            $search_type = 'area';
+            break;
+        case 3:
+            $search_type = 'room_type';
+            break;
+        case 4:
+            $search_type = 'construct';
+            break;
+        case 5:
+            $search_type = 'address';
+            break;
+        case 6:
+            $search_type = 'price';
+            break;
+    }
 
-	$sql="SELECT eid,image,title,area,address,price,room_type,info_type,construct,reliable,create_time,user_type FROM estate_info,user_info WHERE estate_info.uid = user_info.uid AND user_info.frozen = '0' AND title LIKE '%".$key."%' ORDER BY create_time DESC LIMIT 10";
+	$sql="SELECT eid,image,title,area,address,price,room_type,info_type,construct,reliable,create_time,user_type FROM estate_info,user_info WHERE estate_info.uid = user_info.uid AND user_info.frozen = '0' AND ".$search_type." LIKE '%".$key."%' ORDER BY create_time DESC";
 
 	$result=mysql_query($sql,$conn);
 

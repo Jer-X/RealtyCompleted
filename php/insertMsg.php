@@ -47,7 +47,8 @@
 		if(move_uploaded_file($_FILES['upfile']['tmp_name'],$savedir)){
 			$sql = "UPDATE `estate_info` SET `image` = '".$dir."' WHERE eid = '".$eid."'";
 			$result = mysql_query($sql);
-			if($result){
+			$num = mysql_affected_rows();
+			if($num){
 				$json_res = array("code"=>200);
 			}else{
 				$json_res = array("code"=>400);
